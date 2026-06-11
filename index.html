@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adigun Samson — AI Implementation & Automation Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1B4F8A;
+    --blue-light: #D6E4F0;
+    --blue-mid: #2563B0;
+    --accent: #0EA5E9;
+    --dark: #0F172A;
+    --body: #334155;
+    --muted: #64748B;
+    --border: #E2E8F0;
+    --bg: #FFFFFF;
+    --bg2: #F8FAFC;
+    --bg3: #F1F5F9;
+    --green: #059669;
+    --green-bg: #ECFDF5;
+    --tag-bg: #EFF6FF;
+    --tag-text: #1B4F8A;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--body);
+    background: var(--bg);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-weight: 700; font-size: 16px; color: var(--blue);
+    letter-spacing: -0.3px;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 13px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1B4F8A 60%, #2563B0 100%);
+    color: white;
+    padding: 90px 2rem 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(14,165,233,0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+  }
+  .hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 12px; font-weight: 500;
+    padding: 5px 14px; border-radius: 100px;
+    margin-bottom: 20px; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    color: white;
+  }
+  .hero-title {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: rgba(255,255,255,0.75);
+    font-weight: 400;
+    margin-bottom: 28px;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 16px; margin-bottom: 36px;
+  }
+  .hero-meta span {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: rgba(255,255,255,0.7);
+  }
+  .hero-meta svg { width: 14px; height: 14px; opacity: 0.8; }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; color: var(--blue);
+    font-weight: 600; font-size: 14px;
+    padding: 12px 24px; border-radius: var(--radius);
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hero-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+  /* SECTIONS */
+  section { padding: 70px 2rem; }
+  .container { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    color: var(--blue); text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700; color: var(--dark);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 15px;
+    margin-bottom: 48px; max-width: 540px;
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 2rem;
+  }
+  .stats-grid {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .stat {
+    background: var(--bg2);
+    padding: 24px 20px; text-align: center;
+  }
+  .stat-num {
+    font-size: 32px; font-weight: 700;
+    color: var(--blue); letter-spacing: -1px;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px; color: var(--muted);
+    margin-top: 6px; font-weight: 500;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--bg); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .skill-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 22px 20px;
+  }
+  .skill-card-icon {
+    width: 40px; height: 40px;
+    background: var(--blue-light);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .skill-card-icon svg { width: 20px; height: 20px; stroke: var(--blue); }
+  .skill-card h3 {
+    font-size: 14px; font-weight: 600;
+    color: var(--dark); margin-bottom: 12px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: var(--tag-bg); color: var(--tag-text);
+    font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 100px;
+    border: 1px solid var(--blue-light);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag.green { background: var(--green-bg); color: var(--green); border-color: #A7F3D0; }
+
+  /* PROJECTS */
+  .projects-section { background: var(--bg2); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .project-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .project-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .project-label::before {
+    content: ''; display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%; background: var(--accent);
+  }
+  .project-card h3 {
+    font-size: 16px; font-weight: 600;
+    color: var(--dark); margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .project-card p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+  .project-impact {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--green-bg);
+    border: 1px solid #A7F3D0;
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 12px; color: var(--green); font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .project-impact svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .project-tools { display: flex; flex-wrap: wrap; gap: 5px; }
+  .project-tool {
+    background: var(--bg3); color: var(--muted);
+    font-size: 11px; font-weight: 500;
+    padding: 2px 9px; border-radius: 100px;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* EXPERIENCE */
+  .exp-section { background: var(--bg); }
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 0 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-period {
+    font-size: 12px; color: var(--muted);
+    font-weight: 500; padding-top: 3px;
+    line-height: 1.4; font-family: 'JetBrains Mono', monospace;
+  }
+  .exp-right {}
+  .exp-role {
+    font-size: 16px; font-weight: 600;
+    color: var(--dark); margin-bottom: 3px;
+  }
+  .exp-company {
+    font-size: 13px; color: var(--blue);
+    font-weight: 500; margin-bottom: 10px;
+  }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .exp-bullets li {
+    font-size: 13px; color: var(--body);
+    padding-left: 14px; position: relative;
+  }
+  .exp-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--accent); font-size: 11px;
+  }
+
+  /* CERTIFICATIONS */
+  .certs-section { background: var(--bg2); }
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .cert-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .cert-icon {
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: var(--blue-light);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cert-icon svg { width: 18px; height: 18px; stroke: var(--blue); }
+  .cert-name {
+    font-size: 13px; font-weight: 600;
+    color: var(--dark); margin-bottom: 3px; line-height: 1.3;
+  }
+  .cert-issuer { font-size: 12px; color: var(--muted); }
+  .cert-status {
+    font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 100px;
+    display: inline-block; margin-top: 5px;
+  }
+  .cert-status.active { background: var(--green-bg); color: var(--green); }
+  .cert-status.progress { background: #FEF3C7; color: #D97706; }
+
+  /* CONTACT */
+  .contact-section {
+    background: linear-gradient(135deg, #0F172A 0%, #1B4F8A 100%);
+    color: white; text-align: center;
+  }
+  .contact-section .section-label { color: rgba(255,255,255,0.5); }
+  .contact-section .section-title { color: white; }
+  .contact-section .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto 36px; }
+  .contact-links {
+    display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 12px;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white; text-decoration: none;
+    padding: 10px 20px; border-radius: var(--radius);
+    font-size: 13px; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .contact-link:hover { background: rgba(255,255,255,0.2); }
+  .contact-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* FOOTER */
+  footer {
+    background: #0F172A; color: rgba(255,255,255,0.4);
+    text-align: center; padding: 20px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .exp-item { grid-template-columns: 1fr; gap: 4px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Adigun Samson</span>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">Available for Remote Roles · US EST Hours</span>
+    <h1>Adigun Samson</h1>
+    <p class="hero-title">AI Implementation & Automation Specialist<br>IT Systems Administrator · 7+ Years Experience</p>
+    <div class="hero-meta">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Lagos, Nigeria
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Microsoft Azure AZ-900 Certified
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.72a16 16 0 006.29 6.29l1.28-1.28a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +234 801 043 7658
+      </span>
+    </div>
+    <a class="hero-cta" href="#contact">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Get in Touch
+    </a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-num">7+</div>
+      <div class="stat-label">Years IT Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">85%</div>
+      <div class="stat-label">Manual Work Automated</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">End Users Supported</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Companies & Environments</div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="container">
+    <p class="section-label">What I bring</p>
+    <h2 class="section-title">Core Skills & Technologies</h2>
+    <p class="section-sub">Combining solid IT infrastructure fundamentals with hands-on AI and automation engineering.</p>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>AI Implementation & Automation</h3>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">Ansible</span>
+          <span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">Bash</span>
+          <span class="tag">Azure Automation</span><span class="tag">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>AI Tools & Platforms</h3>
+        <div class="tags">
+          <span class="tag green">Microsoft Copilot</span><span class="tag green">ChatGPT</span>
+          <span class="tag green">Claude</span><span class="tag green">Azure AI</span>
+          <span class="tag green">Gemini</span><span class="tag green">LLM Workflows</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </div>
+        <h3>Cloud & Microsoft Stack</h3>
+        <div class="tags">
+          <span class="tag">Microsoft Azure</span><span class="tag">Entra ID</span>
+          <span class="tag">Intune</span><span class="tag">Microsoft 365</span>
+          <span class="tag">Exchange Online</span><span class="tag">SharePoint</span>
+          <span class="tag">Teams</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25"/><line x1="8" y1="16" x2="8" y2="21"/><line x1="8" y1="21" x2="5" y2="21"/><line x1="8" y1="21" x2="11" y2="21"/></svg>
+        </div>
+        <h3>Infrastructure & Systems</h3>
+        <div class="tags">
+          <span class="tag">Windows Server</span><span class="tag">Linux (Ubuntu/RHEL)</span>
+          <span class="tag">VMware</span><span class="tag">Hyper-V</span>
+          <span class="tag">Active Directory</span><span class="tag">DNS/DHCP</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Security & Networking</h3>
+        <div class="tags">
+          <span class="tag">Zscaler</span><span class="tag">CrowdStrike</span>
+          <span class="tag">Sophos</span><span class="tag">Ubiquiti</span>
+          <span class="tag">VPN</span><span class="tag">Zero Trust</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        </div>
+        <h3>ITSM & Documentation</h3>
+        <div class="tags">
+          <span class="tag">ServiceNow</span><span class="tag">Jira</span>
+          <span class="tag">SOP Writing</span><span class="tag">Knowledge Base</span>
+          <span class="tag">Team Training</span><span class="tag">Git/GitHub</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="projects-section">
+  <div class="container">
+    <p class="section-label">What I've built</p>
+    <h2 class="section-title">Key Projects & Implementations</h2>
+    <p class="section-sub">Real automation and AI systems built from scratch across multiple business environments.</p>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-label">AI Workflow</div>
+        <h3>AI-Assisted IT Monitoring & Incident Triage</h3>
+        <p>Designed Azure Automation runbooks with AI-driven alerting logic that detects anomalies and generates plain-language incident summaries with recommended resolutions — reducing cognitive load on support staff.</p>
+        <div class="project-impact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          40% reduction in manual incident triage time
+        </div>
+        <div class="project-tools">
+          <span class="project-tool">Azure Automation</span>
+          <span class="project-tool">PowerShell</span>
+          <span class="project-tool">Azure AI</span>
+          <span class="project-tool">LLM Workflows</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">Process Automation</div>
+        <h3>Employee Onboarding & Offboarding Automation</h3>
+        <p>Built an end-to-end automated workflow integrating Active Directory, Microsoft 365, and HR systems. Replaced a fully manual 2-hour process with a 15-minute automated pipeline with zero human intervention required.</p>
+        <div class="project-impact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          2 hours → under 15 minutes (87% faster)
+        </div>
+        <div class="project-tools">
+          <span class="project-tool">PowerShell</span>
+          <span class="project-tool">Active Directory</span>
+          <span class="project-tool">Microsoft 365</span>
+          <span class="project-tool">Entra ID</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">Infrastructure as Code</div>
+        <h3>Network Configuration Automation (50+ Devices)</h3>
+        <p>Identified that manual SSH-based device management was consuming 10 hours per change cycle. Built Ansible playbooks for configuration management across 50+ Ubiquiti devices, with Python-based logging and a management dashboard.</p>
+        <div class="project-impact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          10 hours → 45 minutes per change cycle
+        </div>
+        <div class="project-tools">
+          <span class="project-tool">Ansible</span>
+          <span class="project-tool">Python</span>
+          <span class="project-tool">Ubiquiti</span>
+          <span class="project-tool">Bash</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">Cloud Infrastructure</div>
+        <h3>Azure Infrastructure-as-Code Deployment Framework</h3>
+        <p>Built Terraform templates for repeatable, standardised Azure cloud provisioning. Replaced ad-hoc manual deployments with version-controlled, auditable infrastructure builds across multiple environments.</p>
+        <div class="project-impact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          60% reduction in deployment time
+        </div>
+        <div class="project-tools">
+          <span class="project-tool">Terraform</span>
+          <span class="project-tool">Azure</span>
+          <span class="project-tool">Git</span>
+          <span class="project-tool">IaC</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">AI Enablement</div>
+        <h3>Internal AI Knowledge Base & Prompt Library</h3>
+        <p>Created and maintained an internal AI knowledge base for staff — including a prompt library for ChatGPT and Copilot, tool usage guides, and SOPs — enabling teams to use AI tools consistently without requiring engineering support.</p>
+        <div class="project-impact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Team AI adoption with zero ongoing engineering dependency
+        </div>
+        <div class="project-tools">
+          <span class="project-tool">ChatGPT</span>
+          <span class="project-tool">Copilot</span>
+          <span class="project-tool">Claude</span>
+          <span class="project-tool">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">Reporting & Analytics</div>
+        <h3>Automated Operations Reporting Dashboard</h3>
+        <p>Built automated data pipelines using Python and Power BI, replacing manual weekly reporting. Leadership received real-time operational visibility with zero manual data compilation required from the IT team.</p>
+        <div class="project-impact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          100% elimination of manual reporting effort
+        </div>
+        <div class="project-tools">
+          <span class="project-tool">Python</span>
+          <span class="project-tool">Power BI</span>
+          <span class="project-tool">Azure</span>
+          <span class="project-tool">REST APIs</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="exp-section">
+  <div class="container">
+    <p class="section-label">Career history</p>
+    <h2 class="section-title">Professional Experience</h2>
+    <p class="section-sub">7+ years across IT support, systems administration, and AI-powered automation.</p>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-period">2024 – Present</div>
+        <div class="exp-right">
+          <div class="exp-role">Systems Administrator</div>
+          <div class="exp-company">The Hotel Macs</div>
+          <ul class="exp-bullets">
+            <li>AI-assisted monitoring via Azure Automation runbooks — 40% faster incident triage</li>
+            <li>Endpoint management for 80+ devices via Microsoft Intune</li>
+            <li>Automated onboarding/offboarding reducing processing from 2 hrs to 15 min</li>
+            <li>Internal AI knowledge base and prompt library for ChatGPT and Copilot</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2023 – 2024</div>
+        <div class="exp-right">
+          <div class="exp-role">Systems & Network Engineer</div>
+          <div class="exp-company">Signature Solution</div>
+          <ul class="exp-bullets">
+            <li>Ansible automation across 50+ network devices — 10 hrs → 45 min change cycle</li>
+            <li>Terraform IaC templates on Azure — 60% faster deployments</li>
+            <li>Zscaler Zero Trust architecture with automated policy enforcement</li>
+            <li>Automated Power BI reporting dashboards via Python data pipelines</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2022 – 2023</div>
+        <div class="exp-right">
+          <div class="exp-role">Systems & Network Administrator</div>
+          <div class="exp-company">African Industries Group</div>
+          <ul class="exp-bullets">
+            <li>Multi-site IT rollout across 3 locations with standardised Ansible-managed builds</li>
+            <li>VMware/Hyper-V virtualisation saving 10+ hours/week via PowerShell scripting</li>
+            <li>IT governance framework, SOPs, and team training programs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2021 – 2022</div>
+        <div class="exp-right">
+          <div class="exp-role">Technical Engineer / Systems Admin</div>
+          <div class="exp-company">Sinocell Technology</div>
+          <ul class="exp-bullets">
+            <li>Linux server environment (Ubuntu/CentOS/RHEL) with automated patch management</li>
+            <li>Python system health monitoring and automated alerting</li>
+            <li>Docker containerisation for internal tools deployment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2020 – 2021</div>
+        <div class="exp-right">
+          <div class="exp-role">Technical Support Specialist</div>
+          <div class="exp-company">The Hotel Macs</div>
+          <ul class="exp-bullets">
+            <li>Tier 1 & 2 support for 100+ users — hardware, software, peripherals</li>
+            <li>Active Directory administration and user provisioning</li>
+            <li>Built IT knowledge base and non-technical user training guides</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2018 – 2020</div>
+        <div class="exp-right">
+          <div class="exp-role">IT Support Specialist</div>
+          <div class="exp-company">Golden Tulip Hotels</div>
+          <ul class="exp-bullets">
+            <li>Frontline Tier 1 IT support and helpdesk via ServiceNow</li>
+            <li>VLAN configuration and Wi-Fi infrastructure management</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="certs-section">
+  <div class="container">
+    <p class="section-label">Credentials</p>
+    <h2 class="section-title">Certifications & Education</h2>
+    <p class="section-sub">Continuous learning in cloud, AI, and IT infrastructure.</p>
+    <div class="certs-grid">
+
+      <div class="cert-card">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="cert-name">Microsoft Azure Fundamentals</div>
+          <div class="cert-issuer">Microsoft · AZ-900</div>
+          <span class="cert-status active">Certified</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25"/></svg>
+        </div>
+        <div>
+          <div class="cert-name">Azure Administrator</div>
+          <div class="cert-issuer">Microsoft · AZ-104</div>
+          <span class="cert-status progress">In Progress</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div>
+          <div class="cert-name">IT Support Specialist</div>
+          <div class="cert-issuer">Alison</div>
+          <span class="cert-status active">Certified</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div>
+          <div class="cert-name">Customer Service Professional</div>
+          <div class="cert-issuer">Alison</div>
+          <span class="cert-status active">Certified</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        </div>
+        <div>
+          <div class="cert-name">Networking & Infrastructure</div>
+          <div class="cert-issuer">Udemy</div>
+          <span class="cert-status active">Certified</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        </div>
+        <div>
+          <div class="cert-name">B.Sc Computer Science</div>
+          <div class="cert-issuer">NOUN · In View</div>
+          <span class="cert-status progress">In Progress</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <p class="section-label">Let's work together</p>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-sub">Available for remote roles. Comfortable with US EST and Australian timezone hours.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:Samsonadigun83@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Samsonadigun83@gmail.com
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/samson-adigun" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin.com/in/samson-adigun
+      </a>
+      <a class="contact-link" href="tel:+2348010437658">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.72a16 16 0 006.29 6.29l1.28-1.28a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +234 801 043 7658
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Adigun Samson · AI Implementation & Automation Specialist · Lagos, Nigeria</p>
+</footer>
+
+</body>
+</html>
